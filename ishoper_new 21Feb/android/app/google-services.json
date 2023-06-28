@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "545077693548",
+    "firebase_url": "https://ishopper-5a439-default-rtdb.firebaseio.com",
+    "project_id": "ishopper-5a439",
+    "storage_bucket": "ishopper-5a439.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545077693548:android:c543b6d908eecaba6f9c49",
+        "android_client_info": {
+          "package_name": "com.ishopper.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545077693548-e81eaamh6nl7nj256iaskk3sa5bb8kmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ishopper.mobile",
+            "certificate_hash": "7cfa91b1c5276e6f0bad54233edda330cc4a21be"
+          }
+        },
+        {
+          "client_id": "545077693548-prkgltr6l6a44kbrkvhc7gjvf9cp9ned.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ishopper.mobile",
+            "certificate_hash": "dd6af191f7b69ede75a0d98c463d7882b830ab03"
+          }
+        },
+        {
+          "client_id": "545077693548-dk8o0gbhplhj8l56bts8vj9bk823hurp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEAPPPMMClYHIHLx3FtLUbQFt5uYloZTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545077693548-dk8o0gbhplhj8l56bts8vj9bk823hurp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "545077693548-g8u2qdmk3ur3oaij1jfgek9fnq54ne04.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ishopper.mobile"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545077693548:android:323dced393ee81886f9c49",
+        "android_client_info": {
+          "package_name": "com.ishopperseller.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545077693548-hdm5em76c1js6fcrdkoo23rgllih2da6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ishopperseller.mobile",
+            "certificate_hash": "7cfa91b1c5276e6f0bad54233edda330cc4a21be"
+          }
+        },
+        {
+          "client_id": "545077693548-qc15tu1s2a0mrfcuv391qr9d5n53u1vc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ishopperseller.mobile",
+            "certificate_hash": "dd6af191f7b69ede75a0d98c463d7882b830ab03"
+          }
+        },
+        {
+          "client_id": "545077693548-dk8o0gbhplhj8l56bts8vj9bk823hurp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEAPPPMMClYHIHLx3FtLUbQFt5uYloZTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545077693548-dk8o0gbhplhj8l56bts8vj9bk823hurp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "545077693548-g8u2qdmk3ur3oaij1jfgek9fnq54ne04.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ishopper.mobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
