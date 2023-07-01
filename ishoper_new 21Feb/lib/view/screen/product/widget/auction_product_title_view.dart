@@ -26,7 +26,7 @@ class AuctionProductTitleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("$TAG on build data ============> ${productModel}");
+    debugPrint("$TAG  details.isActivedata, ============> ${isActive}");
 
     DateTime currentDateTime = DateTime.now();
 
@@ -41,37 +41,6 @@ class AuctionProductTitleView extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /*productModel['producttype'] != 2
-                  ?
-              Container(
-                child: Column(
-                  children: [
-                    Row(children: [
-                      Expanded(
-                          child: Text(productModel["name"] ?? '',
-                              style: titleRegular.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_LARGE,
-                              ),
-                              maxLines: 2)),
-                      SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                      productModel["discount"] != null && productModel["discount"] > 0
-                          ? Text(
-                        '${PriceConverter.convertPrice(context, _startingPrice)}'
-                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                        style: titilliumRegular.copyWith(color: color.Pricecolor, decoration: TextDecoration.lineThrough),
-                      )
-                          : SizedBox(),
-                      SizedBox(width: 1.w),
-                      Text(
-                        '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: double.parse(productModel["discount"].toString()), discountType: productModel['discountType']) : ''}'
-                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: productModel['discount'], discountType: productModel['discountType'])}' : ''}',
-                        style: titilliumBold.copyWith(color: color.Pricecolor, fontSize: Dimensions.FONT_SIZE_LARGE),
-                      )
-                    ]),
-                  ],
-                ),
-              )
-                  :*/
                     Container(
                       child: Column(
                         children: [
@@ -87,7 +56,7 @@ class AuctionProductTitleView extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                              productModel["is_done"] != 0?
+                              isActive != 0 ?
                               Container(child:   countBids == null
                                  ? Text(
                                '',
@@ -98,7 +67,8 @@ class AuctionProductTitleView extends StatelessWidget {
                              )
                                  : Container(
                                child: countBids['latest_bid'].toString() != details.auctionData['reserve_price']
-                                   ? Text(
+                                   ?
+                                 Text(
                                  'Current Bid: ${countBids['latest_bid']}',
                                  style: titilliumRegular.copyWith(
                                    color: color.Pricecolor,
@@ -110,7 +80,7 @@ class AuctionProductTitleView extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
-                          productModel["is_done"] != 0
+                          isActive != 0
                               ? Row(
                                   children: [
                                     // productModel['is_done'] == 0
@@ -121,6 +91,7 @@ class AuctionProductTitleView extends StatelessWidget {
                                           details.diff != null
                                               ? Text(
                                                   '${details.diff.isAfter(currentDateTime) ? "UpComing In" : "Ends In"}',
+
                                                   style: titilliumRegular.copyWith(
                                                     color: Colors.black,
                                                     fontSize: Dimensions.FONT_SIZE_DEFAULT,
@@ -129,6 +100,7 @@ class AuctionProductTitleView extends StatelessWidget {
                                               : Container(),
                                           SizedBox(
                                             height: 5,
+
                                           ),
                                           details.diff != null
                                               ? Container(

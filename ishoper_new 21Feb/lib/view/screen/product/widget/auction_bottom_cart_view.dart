@@ -26,7 +26,7 @@ class AuctionBottomCartView extends StatelessWidget {
     return Consumer<ProductDetailsProvider>(builder: (context, model, child) {
       return
 
-        productModel["error"] != false ?
+        isActive == 1 ?
          Container(
         height: 60,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

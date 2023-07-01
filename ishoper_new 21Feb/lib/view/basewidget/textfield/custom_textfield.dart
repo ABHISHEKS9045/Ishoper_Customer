@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/chat/widget/mycartpage.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 extension EmailValidator on String {
   bool isValidEmail() {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(this);
+    return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(this);
   }
 }
 
@@ -26,6 +23,7 @@ class CustomTextField extends StatelessWidget {
   final Color fillColor;
   final TextCapitalization capitalization;
   final bool isBorder;
+  final List<TextInputFormatter> inputFormatters;
 
   CustomTextField({
     this.controller,
@@ -41,6 +39,7 @@ class CustomTextField extends StatelessWidget {
     this.capitalization = TextCapitalization.none,
     this.fillColor,
     this.isBorder = false,
+    this.inputFormatters,
   });
 
   @override
@@ -48,20 +47,11 @@ class CustomTextField extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        border: isBorder
-            ? Border.all(width: .8, color: Theme.of(context).hintColor)
-            : null,
+        border: isBorder ? Border.all(width: .8, color: Theme.of(context).hintColor) : null,
         color: Theme.of(context).highlightColor,
-        borderRadius: isPhoneNumber
-            ? BorderRadius.only(
-                topRight: Radius.circular(6), bottomRight: Radius.circular(6))
-            : BorderRadius.circular(6),
+        borderRadius: isPhoneNumber ? BorderRadius.only(topRight: Radius.circular(6), bottomRight: Radius.circular(6)) : BorderRadius.circular(6),
         boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(0, 1)) // changes position of shadow
+          BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 3, offset: Offset(0, 1)) // changes position of shadow
         ],
       ),
       child: TextFormField(
@@ -80,11 +70,11 @@ class CustomTextField extends StatelessWidget {
           FocusScope.of(context).requestFocus(nextNode);
         },
         //autovalidate: true,
-        inputFormatters: [
-          isPhoneNumber
-              ? FilteringTextInputFormatter.digitsOnly
-              : FilteringTextInputFormatter.singleLineFormatter
-        ],
+        inputFormatters: inputFormatters != null
+            ? inputFormatters
+            : [
+                this.isPhoneNumber ? FilteringTextInputFormatter.digitsOnly : FilteringTextInputFormatter.singleLineFormatter,
+              ],
         validator: (input) {
           if (input.isEmpty) {
             if (isValidator) {
@@ -100,10 +90,8 @@ class CustomTextField extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
           isDense: true,
           counterText: '',
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: color.colortheme)),
-          hintStyle:
-              titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: color.colortheme)),
+          hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
           errorStyle: TextStyle(height: 1.5),
           border: InputBorder.none,
         ),

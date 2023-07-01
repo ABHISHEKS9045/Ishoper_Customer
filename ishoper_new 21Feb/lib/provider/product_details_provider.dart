@@ -39,6 +39,7 @@ class ProductDetailsProvider extends ChangeNotifier {
   String _errorText;
   bool _hasConnection = true;
   var auctionData;
+  var isActivedata;
   var countBids;
  var starprice ;
   var bidesData;
@@ -226,11 +227,27 @@ class ProductDetailsProvider extends ChangeNotifier {
     try {
       var response = await dio.get('${AppConstants.BASE_URL}${AppConstants.GET_AUCTION}$productId');
       final responseData = json.decode(response.toString());
-      debugPrint("$TAG auctionDetails =======> $response");
-      if (responseData['status'] == 200) {
-        auctionData = responseData['data'];
+      print("$TAG Response  auctionDetails =======> $response");
+
+      if (responseData['status'] == 200 || responseData['status'] == 201) {
+
+        if(responseData['status'] == 201){
+          isActivedata = responseData['is_active'];
+
+          print('$TAG auctionData1 =========>201  $isActivedata');
+
+
+        }else{
+          auctionData = responseData['data'];
+          isActivedata = auctionData['is_active'];
+          print('$TAG auctionData1 =========>200  $isActivedata');
+
+        }
+
+       var isActive = auctionData['is_active'];
         starprice   = auctionData['start_price'];
-        debugPrint('$TAG starprice =========>  $starprice');
+        print('$TAG auctionData1 =========>  $isActive');
+        print('$TAG auctionData.... =========>  $isActive');
 
         startDate = DateTime.parse(auctionData['from_date'].toString());
         endDate = DateTime.parse(auctionData['to_date'].toString());

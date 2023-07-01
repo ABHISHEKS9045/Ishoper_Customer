@@ -82,7 +82,12 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
       final profile = Provider.of<ProfileProvider>(context, listen: false);
       final productModel = Provider.of<ProductProvider>(context, listen: false);
       final walletModel = Provider.of<WalletTransactionProvider>(context, listen: false);
+
+      await model.auctionDetails(context, productId);
+      _loadData(context, model, productModel);
+
       profile.getUserInfo(context);
+
       customerId = profile.customerId;
 
       walletModel.getWalletAmount(customerId);
@@ -91,7 +96,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
       print("$TAG Auction product ============> ${widget.auctionProduct}");
       print("$TAG Auction product id ============> ${widget.auctionProduct["id"]}");
 
-      _loadData(context, model, productModel);
+
       getCountdown(context, model);
       getCountdown1(context, model);
       print("$TAG countdown ==========> ${model.days} day(s) ${model.hours} hour(s) ${model.minutes} minute(s) ${model.seconds} second(s).");
@@ -99,6 +104,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
       model.diff = model.upComingIn.add(Duration(seconds: 1));
       print(" diffdataa=============>${model.diff}");
       getFirebaseData("product_$productId");
+
     });
   }
 
@@ -129,7 +135,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
   }
 
   _loadData(BuildContext context, ProductDetailsProvider model, ProductProvider productModel) async {
-    await model.auctionDetails(context, productId);
+
     model.removePrevReview();
     // model.initProduct(widget.auctionProduct, context);
     productModel.removePrevRelatedProduct();
@@ -162,7 +168,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                           ),
                           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                           Text(
-                            getTranslated('product_details', context),
+                            ('Auction product_details'),
                             style: robotoRegular.copyWith(
                               fontSize: 20,
                               color: Theme.of(context).cardColor,
@@ -175,6 +181,8 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                       ),
                       bottomNavigationBar: AuctionBottomCartView(
                         customerId: customerId,
+                        isActive: details.isActivedata,
+
                         bid: countBids,
                         productModel: widget.auctionProduct,
                         bidCont: details.bidController.text.toString(),
@@ -194,11 +202,11 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                               child: Column(
                                 children: [
                                   AuctionProductTitleView(
+                                    isActive: details.isActivedata,
                                     countBids: countBids,
-                                    // isActive: details.auctionData['is_active'],
                                     productModel: widget.auctionProduct,
                                   ),
-                                  Container(
+                                  details.isActivedata == 1 ? Container(
                                     margin: EdgeInsets.only(right: 20, left: 20),
                                     child: CustomTextField(
                                       controller: details.bidController,
@@ -206,7 +214,8 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                                       textInputAction: TextInputAction.done,
                                       textInputType: TextInputType.emailAddress,
                                     ),
-                                  ),
+                                  ):
+                                      Container(),
 
 
                                   (widget.auctionProduct['details'] != null && widget.auctionProduct['details'].isNotEmpty)

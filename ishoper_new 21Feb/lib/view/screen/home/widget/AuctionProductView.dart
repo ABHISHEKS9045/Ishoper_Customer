@@ -158,7 +158,7 @@ class _AuctionviewproductState extends State<Auctionviewproduct> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          PriceConverter.percentageCalculation(context, model.auctionDataList[index]["unit_price"], model.auctionDataList[index]["discount"], model.auctionDataList[index]["discount_type"]),
+                                          PriceConverter.percentageCalculation(context, model.auctionDataList[index]["unitPrice"], model.auctionDataList[index]["discount"], model.auctionDataList[index]["discount_type"]),
                                           style: robotoRegular.copyWith(color: Theme.of(context).highlightColor, fontSize: Dimensions.FONT_SIZE_SMALL),
                                         ),
                                       ),

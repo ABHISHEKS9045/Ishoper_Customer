@@ -96,6 +96,7 @@ class AppConstants {
   // auction bid API added on
   static const String GET_AUCTION = "api/v1/get_auction/";
   static const String SUBMIT_BID = "api/v1/submit_bid";
+  static const String SUBMIT_AMOUNT = "api/v1/wallet/add-amount";
 
   // sharePreference
   static const String TOKEN = 'token';

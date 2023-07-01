@@ -10,7 +10,6 @@ import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
 import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
 
 class WalletTransactionProvider extends ChangeNotifier {
-
   static const String TAG = "WalletTransactionProvider";
 
   final WalletTransactionRepo transactionRepo;
@@ -107,13 +106,13 @@ class WalletTransactionProvider extends ChangeNotifier {
       var response = await dio.get('http://ishopper.sa/api/v1/wallet?customer_id=$customerId');
       final responseData = json.decode(response.toString());
       debugPrint("$TAG responseData =========> $responseData");
-      if(responseData != null){
-        if(responseData["totalBalance"] != null) {
+      if (responseData != null) {
+        if (responseData["totalBalance"] != null) {
           amount = double.parse(responseData["totalBalance"].toString());
         } else {
           amount = 0;
         }
-        if(responseData["CustomerWalletHistory"] != null) {
+        if (responseData["CustomerWalletHistory"] != null) {
           walletList.clear();
           walletList = responseData["CustomerWalletHistory"];
         } else {

@@ -13,11 +13,13 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../provider/profile_provider.dart';
 import '../../../utill/custom_themes.dart';
+import 'TamaraPaymentScreen.dart';
 
 class WalletScreen extends StatelessWidget {
-
   final bool isBacButtonExist;
+
   WalletScreen({this.isBacButtonExist = true});
+
   ColorResources color = ColorResources();
   var customerId;
 
@@ -63,6 +65,20 @@ class WalletScreen extends StatelessWidget {
             color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.white : Colors.black,
           ),
         ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.add_circle_outlined,
+                color: Color(0xFFFE8551),
+                size: 28,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TamaraPaymentScreen(customerId = customerId)),
+                );
+              }),
+        ],
       ),
       backgroundColor: ColorResources.getIconBg(context),
       body: Container(

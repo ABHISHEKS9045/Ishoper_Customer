@@ -873,10 +873,10 @@ packages:
     dependency: "direct main"
     description:
       name: http
-      sha256: "6aa2946395183537c8b880962d935877325d6a09a2867c3970c05c0fed6ac482"
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.5"
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -1482,6 +1482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  tamara_sdk:
+    dependency: "direct main"
+    description:
+      name: tamara_sdk
+      sha256: "026abf6ad5d3aa1e23de95aa9c832d06baf87492044bd467eeee9020eff6e851"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1"
   term_glyph:
     dependency: transitive
     description:
