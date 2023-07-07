@@ -94,7 +94,10 @@ class OrderProvider with ChangeNotifier {
     ApiResponse apiResponse = await orderRepo.getOrderDetails(orderID, languageCode);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _orderDetails = [];
+
       apiResponse.response.data.forEach((order) => _orderDetails.add(OrderDetailsModel.fromJson(order)));
+     var orderList = apiResponse.response.data;
+      print("orderList  response===================>${orderList}");
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

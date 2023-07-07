@@ -107,7 +107,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     productModel.removePrevRelatedProduct();
     productModel.initRelatedProductList(widget.product.id.toString(), context);
     model.getCount(widget.product.id.toString(), context);
-    model.getSharableLink(widget.product.slug.toString(), context);
+    // model.getSharableLink(widget.product.slug.toString(), context);
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       Provider.of<WishListProvider>(context, listen: false).checkWishList(widget.product.id.toString(), context);
     }

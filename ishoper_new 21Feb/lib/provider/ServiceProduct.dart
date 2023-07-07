@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter_sixvalley_ecommerce/data/model/CommonModel.dart';
 import 'package:flutter_sixvalley_ecommerce/data/model/QunatityModel.dart';
 import 'package:flutter_sixvalley_ecommerce/data/model/SellerCartModel.dart';
+import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -31,8 +32,8 @@ class ServiceProduct {
     return file;
   }
 
-  static String BaseUrl = "http://ishopper.sa/api/v1/customer/";
-  static String BaseUrlCart = "http://ishopper.sa/api/v1/cart/";
+  static String BaseUrl = "${AppConstants.BASE_URL}api/v1/customer/";
+  static String BaseUrlCart = "${AppConstants.BASE_URL}api/v1/cart/";
   static String customerstoreApi = BaseUrl + "customerstore";
   static String colorApi = BaseUrl + "color";
   static String categoryApi = BaseUrl + "category";
@@ -44,7 +45,7 @@ class ServiceProduct {
   static String ViewCartApi = BaseUrlCart + "customlist";
   static String deleteCartApi = BaseUrlCart + "remove/custom";
   static String updateQuantity = BaseUrlCart + "update/custom";
-  static String sizeApi = 'http://ishopper.sa/api/v1/getSizeAndMaterials?category_id=';
+  static String sizeApi = '${AppConstants.BASE_URL}api/v1/getSizeAndMaterials?category_id=';
 
   static Future<AddProductModel> uploadFileAddProduct(
       String description,
@@ -190,7 +191,7 @@ class ServiceProduct {
 
   Future<bool> deleteProduct(String token,String id) async {
     final response = await http.post(
-      Uri.parse('https://mactosys.com/iShoper/api/v1/delete_product/'+id),
+      Uri.parse('${AppConstants.BASE_URL}api/v1/delete_product/'+id),
       headers: <String, String>{
         "Authorization": "Bearer " + token,
       },

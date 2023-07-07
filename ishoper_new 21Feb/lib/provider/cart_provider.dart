@@ -18,6 +18,7 @@ class CartProvider extends ChangeNotifier {
   CartProvider({@required this.cartRepo});
 
   List<CartModel> _cartList = [];
+
   List<ChosenShippingMethodModel> _chosenShippingList = [];
   List<ChosenShippingMethodModel> get chosenShippingList =>_chosenShippingList;
   List<ShippingModel> _shippingList;
@@ -30,6 +31,7 @@ class CartProvider extends ChangeNotifier {
   String _updateQuantityErrorText;
   String get addOrderStatusErrorText => _updateQuantityErrorText;
   bool _getData = true;
+  List  cartDataList = [];
 
   List<CartModel> get cartList => _cartList;
   // List<ShippingMethodModel> get shippingMethodList => _shippingMethodList;
@@ -104,7 +106,10 @@ class CartProvider extends ChangeNotifier {
     ApiResponse apiResponse = await cartRepo.getCartListData();
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _cartList = [];
+
       apiResponse.response.data.forEach((cart) => _cartList.add(CartModel.fromJson(cart)));
+      cartDataList = apiResponse.response.data;
+      print("cartlist  response===================>${cartDataList}");
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

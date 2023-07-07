@@ -38,7 +38,6 @@ import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/home_categor
 import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/latest_product_view.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/main_section_banner.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/post_product.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/productAuctionList.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/products_view.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/recommended_product_view.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/top_seller_view.dart';
@@ -50,6 +49,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../product/widget/viewAuctionProduct.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -153,11 +154,7 @@ class _HomePageState extends State<HomePage> {
                       width: 30.w,
                       fit: BoxFit.cover,
                     ),
-                    // title: Text(
-                    //   "Home",
-                    //   style: TextStyle(color: Colors.black),
-                    // ),
-                    // title: Image.asset(Images.logo_with_name_image, height: 35),
+
                     actions: [
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
@@ -230,19 +227,7 @@ class _HomePageState extends State<HomePage> {
                                     color: color.colortheme,
                                   ),
                                 ),
-                                /*Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: color.colortheme,
-                                          //  Theme.of(context).primaryColor,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(Dimensions
-                                                  .PADDING_SIZE_EXTRA_SMALL))),
-                                      child: Icon(Icons.search,
-                                          color: Theme.of(context).cardColor,
-                                          size: Dimensions.ICON_SIZE_SMALL),
-                                    ),*/
+
                               ]),
                             ),
                           ),
@@ -256,30 +241,6 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           BannersView(),
                           SizedBox(height: Dimensions.HOME_PAGE_PADDING),
-
-                          // Category
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(
-                          //       horizontal:
-                          //           Dimensions.PADDING_SIZE_EXTRA_EXTRA_SMALL,
-                          //       vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                          //   child: TitleRow(
-                          //       title: getTranslated('CATEGORY', context),
-                          //       onTap: () => Navigator.push(
-                          //           context,
-                          //           MaterialPageRoute(
-                          //               builder: (_) => AllCategoryScreen()))),
-                          // ),
-                          // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(
-                          //       bottom: Dimensions.HOME_PAGE_PADDING),
-                          //   child: CategoryView(isHomePage: true),
-                          // ),
-
-                          // Mega Deal
-
-                          // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                           Container(
                             padding: EdgeInsets.only(right: 10.0, left: 10.0, top: 8.0, bottom: 0.0),
                             height: 120,
@@ -292,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                                     SizedBox(
                                       height: 10.0,
                                     ),
-                                    // sizedboxheight(10.0),
+
                                     Text(
                                       "Post the product you want.",
                                       textAlign: TextAlign.start,
@@ -301,8 +262,7 @@ class _HomePageState extends State<HomePage> {
                                     SizedBox(
                                       height: 15.0,
                                     ),
-                                    // sizedboxheight(10.0),
-                                    // addProductbtn()
+
                                     ElevatedButton(
                                         style: TextButton.styleFrom(
                                           elevation: 1,
@@ -311,10 +271,9 @@ class _HomePageState extends State<HomePage> {
                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                         ),
                                         onPressed: () {
-                                          // await getImagefromcamera(_image);
-                                          // await getImageCamera();
+
                                           Get.to(() => PostProductPage(
-                                              // selectedImage:
+
                                               //     selectedImage,
                                               ));
                                         },
@@ -324,21 +283,7 @@ class _HomePageState extends State<HomePage> {
                                         ))
                                   ],
                                 ),
-                                // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                                // Container(
-                                //   width: 335.0,
-                                //   height: 100.0,
-                                //   child: selectedImage != null
-                                //       ? Image.file(
-                                //           selectedImage!,
-                                //           width: 100.0,
-                                //           height: 100.0,
-                                //           fit: BoxFit.fitHeight,
-                                //         )
-                                //       : Container(
-                                //           child: Image.asset(("assets/images/Frame.png"),
-                                //               fit: BoxFit.cover)),
-                                // )
+
                               ],
                             ),
                           ),
@@ -516,9 +461,9 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             child: TitleRow(
-                                title: ('Auction Products'),
+                                title: getTranslated('Auction Products' ,context),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (_) => AllProductScreen(productType: ProductType.LATEST_PRODUCT)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => viewAuctionProductList(scrollController: _scrollController)));
                                 }),
                           ),
                           SizedBox(height: Dimensions.PADDING_SIZE_SMALL),

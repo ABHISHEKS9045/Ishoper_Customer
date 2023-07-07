@@ -33,7 +33,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedUrl = '${AppConstants.BASE_URL}/customer/payment-mobile?customer_id='
+    selectedUrl = '${AppConstants.BASE_URL}customer/payment-mobile?customer_id='
         '${widget.customerID}&address_id=${widget.addressID}&coupon_code='
         '${widget.couponCode}&billing_address_id=${widget.billingId}&order_note=${widget.orderNote}';
     print(selectedUrl);

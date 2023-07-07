@@ -40,13 +40,15 @@ class AllProductScreen extends StatelessWidget {
             style: titilliumRegular.copyWith(
                 fontSize: 20, color: ColorResources.WHITE)),
       ),
-      body: SafeArea(
+      body:
+      SafeArea(
         child: RefreshIndicator(
           backgroundColor: Theme.of(context).primaryColor,
           onRefresh: () async {
             return true;
           },
-          child: CustomScrollView(
+          child:
+          CustomScrollView(
             controller: _scrollController,
             slivers: [
               SliverToBoxAdapter(

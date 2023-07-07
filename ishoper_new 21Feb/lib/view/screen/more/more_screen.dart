@@ -39,12 +39,10 @@ class MoreScreen extends StatefulWidget {
   @override
   State<MoreScreen> createState() => _MoreScreenState();
 }
-
 class _MoreScreenState extends State<MoreScreen> {
   bool isGuestMode;
   String version;
   bool singleVendor = false;
-
   @override
   void initState() {
     isGuestMode = !Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
@@ -66,7 +64,6 @@ class _MoreScreenState extends State<MoreScreen> {
     singleVendor = Provider.of<SplashProvider>(context, listen: false).configModel.businessMode == "single";
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,7 +191,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                 ?
                             SquareButton(
                                     image: Images.wallet,
-                                    title: getTranslated('wallet', context),
+                                    title:  getTranslated('wallet', context),
                                     navigateTo: WalletScreen(),
                                     count: 1,
                                     hasCount: false,
@@ -228,7 +225,7 @@ class _MoreScreenState extends State<MoreScreen> {
                               title: getTranslated('wallet', context),
                               navigateTo: WalletScreen(),
                               count: 1,
-                              hasCount: false,
+                              hasCount: true,
                             ),
 
                             SquareButton(
@@ -273,7 +270,8 @@ class _MoreScreenState extends State<MoreScreen> {
                 navigateTo: AllCategoryScreen(),
               ),
               TitleButton(
-                image: Images.more_filled_image,
+                image: Images.wallet,
+
                 title: getTranslated('wallet', context),
                 navigateTo: WalletScreen(),
               ),
@@ -391,9 +389,7 @@ class SquareButton extends StatelessWidget {
   final Widget navigateTo;
   final int count;
   final bool hasCount;
-
   SquareButton({@required this.image, @required this.title, @required this.navigateTo, @required this.count, @required this.hasCount});
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 100;
@@ -405,7 +401,7 @@ class SquareButton extends StatelessWidget {
           child: Container(
             width: width / 4,
             height: width / 4,
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: ColorResources.getPrimary(context),
@@ -437,7 +433,7 @@ class SquareButton extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.center,
-          child: Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+          child: Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
         ),
       ]),
     );

@@ -30,6 +30,7 @@ class ProfileProvider extends ChangeNotifier {
   String _addAddressErrorText;
   double _balance;
   double get balance =>_balance;
+  List dataOrder = [];
 
   List<String> get addressTypeList => _addressTypeList;
   String get addressType => _addressType;
@@ -78,7 +79,9 @@ class ProfileProvider extends ChangeNotifier {
 
   Future<void> initAddressList(BuildContext context) async {
     ApiResponse apiResponse = await profileRepo.getAllAddress();
+
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+
       _addressList = [];
       _billingAddressList =[];
       _shippingAddressList =[];
@@ -93,6 +96,8 @@ class ProfileProvider extends ChangeNotifier {
 
 
       });
+         dataOrder = apiResponse.response.data;
+      print("apiResponsegetAllAddress=============>${ apiResponse.response.data}");
      // apiResponse.response.data.forEach((address) => _addressList.add(AddressModel.fromJson(address)));
     } else {
       ApiChecker.checkApi(context, apiResponse);
@@ -126,11 +131,12 @@ class ProfileProvider extends ChangeNotifier {
     ApiResponse apiResponse = await profileRepo.getUserInfo();
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _userInfoModel = UserInfoModel.fromJson(apiResponse.response.data);
+    // List  Customerdata = apiResponse.response.data ;
       userID = _userInfoModel.id.toString();
       customerId = _userInfoModel.id.toString();
 
       _balance = _userInfoModel.walletBalance;
-      print('===> nai keno==>${_userInfoModel.walletBalance}');
+      // print('===> Customerdata keno==>${_userInfoModel}');
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

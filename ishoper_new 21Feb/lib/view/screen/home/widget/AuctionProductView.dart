@@ -41,12 +41,14 @@ class _AuctionviewproductState extends State<Auctionviewproduct> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return
+      Consumer<ProductProvider>(
       builder: (context, model, _) {
         return Column(children: [
           Container(
             height: MediaQuery.of(context).size.width / 1.45,
-            child: ListView.builder(
+            child:
+            ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: model.auctionDataList.length,
                 itemBuilder: (ctx, int index) {
@@ -109,7 +111,7 @@ class _AuctionviewproductState extends State<Auctionviewproduct> {
                                             rating: double.parse(ratting),
                                             size: 18,
                                           ),
-                                          Text('(${model.auctionDataList[index]["review_Count"].toString() ?? 0})',
+                                          Text('(${model.auctionDataList[index]["reviews_count"].toString() ?? 0})',
                                               style: robotoRegular.copyWith(
                                                 fontSize: Dimensions.FONT_SIZE_SMALL,
                                               )),

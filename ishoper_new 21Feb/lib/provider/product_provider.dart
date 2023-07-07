@@ -295,7 +295,7 @@ class ProductProvider extends ChangeNotifier {
   auctionList() async {
     Dio dio = Dio();
     try {
-      var response = await dio.get('http://ishopper.sa/api/v1/products/auction');
+      var response = await dio.get('${AppConstants.BASE_URL}api/v1/products/auction');
       final responseData = json.decode(response.toString());
        auctionDataList = responseData['products'];
 

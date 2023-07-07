@@ -2,8 +2,8 @@ import 'package:flutter_sixvalley_ecommerce/data/model/response/language_model.d
 
 class AppConstants {
   static const String APP_NAME = 'IShopper';
-  static const String BASE_URL = 'http://ishopper.sa/';
-  static const String imageBaseUrl = "http://ishopper.sa/storage/app/public/custom/product/";
+  static const String BASE_URL = 'https://ishopper.sa/';
+  static const String imageBaseUrl = "${BASE_URL}storage/app/public/custom/product/";
   static const String USER_ID = 'userId';
   static const String NAME = 'name';
   static const String CATEGORIES_URI = '/api/v1/categories';
@@ -96,7 +96,7 @@ class AppConstants {
   // auction bid API added on
   static const String GET_AUCTION = "api/v1/get_auction/";
   static const String SUBMIT_BID = "api/v1/submit_bid";
-  static const String SUBMIT_AMOUNT = "api/v1/wallet/add-amount";
+  static const String SUBMIT_AMOUNT = "api/v1/wallet/add-amount?";
 
   // sharePreference
   static const String TOKEN = 'token';

@@ -1,33 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/cart_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/show_custom_snakbar.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/cart/cart_screen.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/product/widget/cart_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../provider/product_details_provider.dart';
 
 class AuctionBottomCartView extends StatelessWidget {
   final productModel;
+  final Upcoming;
   final customerId;
   final bid;
   final isActive;
+  final countBids;
   final String bidCont;
 
-  AuctionBottomCartView({@required this.productModel, this.isActive, this.customerId, this.bid, this.bidCont,});
+  AuctionBottomCartView({
+    @required this.productModel,
+    this.isActive,
+    this.customerId,
+    this.bid,
+    this.bidCont,
+    this.Upcoming,
+    this.countBids,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductDetailsProvider>(builder: (context, model, child) {
-      return
+      return showBottomBar(context, model, isActive);
+    });
+  }
 
-        isActive == 1 ?
-         Container(
+
+  Widget showBottomBar(BuildContext context, ProductDetailsProvider model, int isActive) {
+    if(isActive == 0) {
+      return Container(
+        height: 60,
+        alignment: Alignment.center,
+        child: Text(
+          getTranslated("No Auction is Running right Now", context),
+          style: titilliumSemiBold.copyWith(
+            fontSize: 20,
+            color: Colors.black87,
+          ),
+        ),
+      );
+    } else if(isActive == 1) {
+      return Container(
         height: 60,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
@@ -53,13 +74,12 @@ class AuctionBottomCartView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  getTranslated("Bid Amount", context) + ' ',
+                  "${getTranslated("Bid Start Price", context)}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-
                 Text(
                   '${model.starprice} SR',
                   style: TextStyle(
@@ -77,8 +97,6 @@ class AuctionBottomCartView extends StatelessWidget {
                   await model.bidSubmit(context, model, productModel["id"], customerId, bid, bidCont).whenComplete(() {
                     model1.bidController.clear();
                   });
-
-
                 },
                 child: Container(
                   height: 50,
@@ -100,18 +118,20 @@ class AuctionBottomCartView extends StatelessWidget {
             ),
           ],
         ),
-
-      ):Container(
-          height: 60,
-            alignment: Alignment.center,
-            
-            child: Text(" Auction is over now because auction \n reached to maximum amount limit" ,
-              style: titilliumSemiBold.copyWith(
-                fontSize: 17,
-                color: Colors.black87,),
-            )
-
-        );
-    });
+      );
+    } else {
+      return Container(
+        height: 60,
+        alignment: Alignment.center,
+        child: Text(
+          getTranslated("No Auction is Running right Now", context),
+          style: titilliumSemiBold.copyWith(
+            fontSize: 20,
+            color: Colors.black87,
+          ),
+        ),
+      );
+    }
   }
+
 }

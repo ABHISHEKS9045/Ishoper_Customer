@@ -29,6 +29,7 @@ import 'package:flutter_sixvalley_ecommerce/view/screen/product/widget/related_p
 import 'package:flutter_sixvalley_ecommerce/view/screen/product/widget/review_widget.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/product/widget/seller_view.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/product/widget/youtube_video_widget.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
 import '../../../provider/profile_provider.dart';
@@ -102,7 +103,8 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
       print("$TAG countdown ==========> ${model.days} day(s) ${model.hours} hour(s) ${model.minutes} minute(s) ${model.seconds} second(s).");
       print("$TAG countdown ==========> ${model.days1} day(s) ${model.hours1} hour(s) ${model.minutes1} minute(s) ${model.seconds1} second(s).");
       model.diff = model.upComingIn.add(Duration(seconds: 1));
-      print(" diffdataa=============>${model.diff}");
+      var Upcoming = model.diff;
+      print(" diffdataaUpcoming=============>$Upcoming");
       getFirebaseData("product_$productId");
 
     });
@@ -141,24 +143,29 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
     productModel.removePrevRelatedProduct();
     productModel.initRelatedProductList(productId.toString(), context);
     model.getCount(productId.toString(), context);
-    model.getSharableLink(productId, context);
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       Provider.of<WishListProvider>(context, listen: false).checkWishList(productId.toString(), context);
     }
-    // productModel.initSellerProductList(widget.product.userId.toString(), 1, context);
   }
 
   ColorResources color = ColorResources();
 
   @override
   Widget build(BuildContext context) {
+    DateTime currentDateTime = DateTime.now();
     ScrollController _scrollController = ScrollController();
     String ratting = widget.auctionProduct != null && widget.auctionProduct["rating"] != null && widget.auctionProduct['rating'].length != 0 ? widget.auctionProduct['rating'][0].average.toString() : "0";
     return widget.auctionProduct != null
         ? Consumer<ProductDetailsProvider>(
             builder: (context, details, child) {
               return details.hasConnection
-                  ? Scaffold(
+                  ? ModalProgressHUD(
+                  inAsyncCall: details.is_loding,
+                  opacity: 0.7,
+                  progressIndicator: CircularProgressIndicator(
+                    color: Colors.orange,
+                  ), child:
+              Scaffold(
                       backgroundColor: Theme.of(context).cardColor,
                       appBar: AppBar(
                         title: Row(children: [
@@ -168,7 +175,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                           ),
                           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                           Text(
-                            ('Auction product_details'),
+                            getTranslated('Auction product_details',context),
                             style: robotoRegular.copyWith(
                               fontSize: 20,
                               color: Theme.of(context).cardColor,
@@ -181,7 +188,9 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                       ),
                       bottomNavigationBar: AuctionBottomCartView(
                         customerId: customerId,
-                        isActive: details.isActivedata,
+                        isActive: countBids == null ? details.isActivedata : countBids["is_active"],
+
+                        // Upcoming : details.diff.isAfter(currentDateTime) == "UpComing In" ,
 
                         bid: countBids,
                         productModel: widget.auctionProduct,
@@ -202,7 +211,9 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                               child: Column(
                                 children: [
                                   AuctionProductTitleView(
-                                    isActive: details.isActivedata,
+                                    // isActive: details.isActivedata,
+                                    isActive: countBids == null ? details.isActivedata : countBids["is_active"],
+
                                     countBids: countBids,
                                     productModel: widget.auctionProduct,
                                   ),
@@ -210,9 +221,9 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                                     margin: EdgeInsets.only(right: 20, left: 20),
                                     child: CustomTextField(
                                       controller: details.bidController,
-                                      hintText: ('ENTER Bid Amount'),
+                                      hintText: getTranslated('ENTER Bid Amount',context),
                                       textInputAction: TextInputAction.done,
-                                      textInputType: TextInputType.emailAddress,
+                                      textInputType: TextInputType.numberWithOptions(),
                                     ),
                                   ):
                                       Container(),
@@ -335,7 +346,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                           ],
                         ),
                       ),
-                    )
+                    ))
                   : Scaffold(body: NoInternetOrDataScreen(isNoInternet: true, child: AuctionProductDetails(auctionProduct: widget.auctionProduct)));
             },
           )

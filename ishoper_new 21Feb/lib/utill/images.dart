@@ -79,4 +79,6 @@ class Images {
   static const String wallet = 'assets/images/wallet.png';
   static const String loyalty_point = 'assets/images/trophy.png';
   static const String loyalty_trophy = 'assets/images/loyalty.png';
+  static const String tamara = 'assets/images/tamara.jpg';
+
 }

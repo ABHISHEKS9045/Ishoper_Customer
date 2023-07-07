@@ -3,6 +3,7 @@ import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dar
 import 'package:flutter_sixvalley_ecommerce/provider/product_details_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/theme_provider.dart';
+import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
@@ -38,8 +39,6 @@ class YourProductDetails extends StatefulWidget {
 
 class _YourProductDetailsState extends State<YourProductDetails> {
   ColorResources color = ColorResources();
-  String imageBaseUrl =
-      "http://ishopper.sa/storage/app/public/custom/product/";
 
   final PageController _controller = PageController();
 
@@ -112,7 +111,7 @@ class _YourProductDetailsState extends State<YourProductDetails> {
                     placeholder: Images.placeholder,
                     height: MediaQuery.of(context).size.width,
                     width: MediaQuery.of(context).size.width,
-                    image: imageBaseUrl + '/'+ widget.images[index],
+                    image: AppConstants.imageBaseUrl + '/'+ widget.images[index],
                     imageErrorBuilder: (c, o, s) => Image.asset(
                       Images.placeholder,
                       height: MediaQuery.of(context).size.width,

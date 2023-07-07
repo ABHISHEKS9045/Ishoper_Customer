@@ -40,8 +40,10 @@ class ProductDetailsProvider extends ChangeNotifier {
   bool _hasConnection = true;
   var auctionData;
   var isActivedata;
+
   var countBids;
- var starprice ;
+  var starprice;
+
   var bidesData;
   DateTime currentTime = DateTime.now();
   DateTime upComingIn;
@@ -152,6 +154,9 @@ class ProductDetailsProvider extends ChangeNotifier {
 
   void getSharableLink(String productID, BuildContext context) async {
     ApiResponse apiResponse = await productDetailsRepo.getSharableLink(productID);
+
+    print("productDetailsRepo.getSharableLink=>${apiResponse}");
+
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _sharableLink = apiResponse.response.data;
     } else {
@@ -223,6 +228,7 @@ class ProductDetailsProvider extends ChangeNotifier {
   }
 
   auctionDetails(BuildContext context, productId) async {
+    showLoader();
     Dio dio = Dio();
     try {
       var response = await dio.get('${AppConstants.BASE_URL}${AppConstants.GET_AUCTION}$productId');
@@ -230,22 +236,23 @@ class ProductDetailsProvider extends ChangeNotifier {
       print("$TAG Response  auctionDetails =======> $response");
 
       if (responseData['status'] == 200 || responseData['status'] == 201) {
+        hideLoader();
 
-        if(responseData['status'] == 201){
+        if (responseData['status'] == 201) {
           isActivedata = responseData['is_active'];
 
           print('$TAG auctionData1 =========>201  $isActivedata');
-
-
-        }else{
+          hideLoader();
+        } else {
           auctionData = responseData['data'];
           isActivedata = auctionData['is_active'];
           print('$TAG auctionData1 =========>200  $isActivedata');
-
+          hideLoader();
         }
 
-       var isActive = auctionData['is_active'];
-        starprice   = auctionData['start_price'];
+        var isActive = auctionData['is_active'];
+        starprice = auctionData['start_price'];
+
         print('$TAG auctionData1 =========>  $isActive');
         print('$TAG auctionData.... =========>  $isActive');
 
@@ -261,13 +268,16 @@ class ProductDetailsProvider extends ChangeNotifier {
       } else {
         debugPrint('$TAG Error =========>  ${responseData["message"]}');
         var messages = responseData["message"];
+        hideLoader();
       }
     } catch (e) {
       debugPrint('$TAG Error ==========> ${e.toString()}');
+      hideLoader();
     }
   }
 
   bidSubmit(BuildContext context, model, int productId, var customerId, var bid, String bidAmount) async {
+    showLoader();
     Dio dio = Dio();
     try {
       var response = await dio.get("${AppConstants.BASE_URL}${AppConstants.SUBMIT_BID}?product_id=$productId&customer_id=$customerId&bid_amount=${bidAmount}");
@@ -276,22 +286,22 @@ class ProductDetailsProvider extends ChangeNotifier {
       if (responseData['status'] == 200) {
         if (bid['latest_bid'] == bid['reserve_price']) {
           Fluttertoast.showToast(msg: 'Bid is completed');
-        } else
-          {
-            var message = responseData["message"].toString();
+          hideLoader();
+        } else {
+          var message = responseData["message"].toString();
 
-            Fluttertoast.showToast(msg: message.toString());
+          Fluttertoast.showToast(msg: message.toString());
+          hideLoader();
         }
-
       } else {
         var message = responseData["message"].toString();
         debugPrint('$TAG Error ==========> $message');
         Fluttertoast.showToast(msg: message.toString());
-
-
+        hideLoader();
       }
     } catch (e) {
       debugPrint('$TAG Error ========>  ${e.toString()}');
+      hideLoader();
     }
   }
 }

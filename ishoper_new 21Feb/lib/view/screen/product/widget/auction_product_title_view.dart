@@ -69,7 +69,7 @@ class AuctionProductTitleView extends StatelessWidget {
                                child: countBids['latest_bid'].toString() != details.auctionData['reserve_price']
                                    ?
                                  Text(
-                                 'Current Bid: ${countBids['latest_bid']}',
+                                 'Current Bid: ${countBids['latest_bid']} SR',
                                  style: titilliumRegular.copyWith(
                                    color: color.Pricecolor,
                                    fontSize: Dimensions.FONT_SIZE_LARGE,

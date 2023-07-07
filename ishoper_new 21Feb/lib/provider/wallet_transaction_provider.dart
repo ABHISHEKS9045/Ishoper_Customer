@@ -8,6 +8,7 @@ import 'package:flutter_sixvalley_ecommerce/data/model/response/transaction_mode
 import 'package:flutter_sixvalley_ecommerce/data/repository/wallet_transaction_repo.dart';
 import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
 import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
 
 class WalletTransactionProvider extends ChangeNotifier {
   static const String TAG = "WalletTransactionProvider";
@@ -44,6 +45,17 @@ class WalletTransactionProvider extends ChangeNotifier {
   List<dynamic> walletList = [];
 
   List<LoyaltyPointList> get loyaltyPointList => _loyaltyPointList;
+  bool _is_loding = false;
+  bool get is_loding => _is_loding;
+  showLoader() {
+    _is_loding = true;
+    notifyListeners();
+  }
+
+  hideLoader() {
+    _is_loding = false;
+    notifyListeners();
+  }
 
   Future<void> getTransactionList(BuildContext context, int offset) async {
     ApiResponse apiResponse = await transactionRepo.getWalletTransactionList(offset);
@@ -101,11 +113,13 @@ class WalletTransactionProvider extends ChangeNotifier {
   }
 
   getWalletAmount(var customerId) async {
+    showLoader();
     Dio dio = Dio();
     try {
-      var response = await dio.get('http://ishopper.sa/api/v1/wallet?customer_id=$customerId');
+      var response = await dio.get('${AppConstants.BASE_URL}api/v1/wallet?customer_id=$customerId');
       final responseData = json.decode(response.toString());
       debugPrint("$TAG responseData =========> $responseData");
+
       if (responseData != null) {
         if (responseData["totalBalance"] != null) {
           amount = double.parse(responseData["totalBalance"].toString());
@@ -113,15 +127,19 @@ class WalletTransactionProvider extends ChangeNotifier {
           amount = 0;
         }
         if (responseData["CustomerWalletHistory"] != null) {
+          hideLoader();
           walletList.clear();
           walletList = responseData["CustomerWalletHistory"];
         } else {
           walletList = [];
+          hideLoader();
         }
       } else {
+        hideLoader();
         // todo: need to show message on null response
       }
     } catch (e) {
+      hideLoader();
       debugPrint(' Error ==========> ${e.toString()}');
     }
   }

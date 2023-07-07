@@ -42,14 +42,12 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
       isLoading = false;
     });
 
-    sellerCartModel = await ServiceProduct.viewCard(
-        pref.getString(AppConstants.TOKEN).toString());
+    sellerCartModel = await ServiceProduct.viewCard(pref.getString(AppConstants.TOKEN).toString());
 
     if (sellerCartModel.status == true) {
       for (var i = 0; i < sellerCartModel.data.length; i++) {
         key_id = sellerCartModel.data[i].id.toString();
-        QuantityPrice =
-            sellerCartModel.data[i].quantity * sellerCartModel.data[i].price;
+        QuantityPrice = sellerCartModel.data[i].quantity * sellerCartModel.data[i].price;
         TotalAmount = TotalAmount + QuantityPrice;
       }
       // Fluttertoast.showToast(
@@ -76,8 +74,7 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
       isLoading = false;
     });
 
-    commonModel = await ServiceProduct.deleteCard(
-        pref.getString(AppConstants.TOKEN).toString(), id);
+    commonModel = await ServiceProduct.deleteCard(pref.getString(AppConstants.TOKEN).toString(), id);
 
     if (commonModel.status == true) {
       viewCardApi();
@@ -106,8 +103,7 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
       isLoadingQu = false;
     });
 
-    qunatityModel = await ServiceProduct.updateQuantityCart(
-        pref.getString(AppConstants.TOKEN).toString(), id, quantity);
+    qunatityModel = await ServiceProduct.updateQuantityCart(pref.getString(AppConstants.TOKEN).toString(), id, quantity);
 
     if (qunatityModel.status == true) {
       viewCardApi();
@@ -129,9 +125,6 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
     });
   }
 
-  String imageBaseUrl =
-      "http://ishopper.sa/storage/app/public/custom/product/";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,17 +141,12 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                     onTap: () {
                       Get.back();
                     },
-                    child: Card(
-                        child: Image.asset("assets/images/backarrow.png"))),
+                    child: Card(child: Image.asset("assets/images/backarrow.png"))),
               ),
               Text(
                 "My Cart",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 24.0,
-                    color: color.textColor,
-                    fontWeight: color.fontWeight600),
+                style: TextStyle(fontFamily: "Inter", fontSize: 24.0, color: color.textColor, fontWeight: color.fontWeight600),
               ),
             ],
           ),
@@ -184,11 +172,9 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Material(
                                       elevation: 5,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
                                       child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
                                         // height: 110.0,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
@@ -197,95 +183,51 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                                           gradient: LinearGradient(
                                             begin: Alignment.topRight,
                                             end: Alignment.bottomLeft,
-                                            colors: [
-                                              HexColor("#FFEDEF"),
-                                              HexColor("#FFFBFC")
-                                            ],
+                                            colors: [HexColor("#FFEDEF"), HexColor("#FFFBFC")],
                                           ),
                                         ),
                                         child: Column(
                                           children: [
                                             Container(
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
                                                     width: 120.0,
                                                     height: 110.0,
                                                     margin: EdgeInsets.all(8.0),
                                                     decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10)),
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              imageBaseUrl +
-                                                                  "/" +
-                                                                  sellerCartModel
-                                                                      .data[
-                                                                          index]
-                                                                      .images),
-                                                          fit: BoxFit.cover),
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                      image: DecorationImage(image: NetworkImage(AppConstants.imageBaseUrl + "/" + sellerCartModel.data[index].images), fit: BoxFit.cover),
                                                     ),
                                                   ),
                                                   Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      color
-                                                          .sizedboxheight(10.0),
+                                                      color.sizedboxheight(10.0),
                                                       Container(
                                                         child: Row(
                                                           children: [
                                                             Container(
                                                               child: Text(
-                                                                sellerCartModel
-                                                                    .data[index]
-                                                                    .name,
-                                                                style: TextStyle(
-                                                                    color: HexColor(
-                                                                        "#2C2C2C"),
-                                                                    fontSize:
-                                                                        16.0,
-                                                                    fontWeight:
-                                                                        color
-                                                                            .fontWeight400),
+                                                                sellerCartModel.data[index].name,
+                                                                style: TextStyle(color: HexColor("#2C2C2C"), fontSize: 16.0, fontWeight: color.fontWeight400),
                                                               ),
                                                             ),
                                                             Container(
                                                               width: 130,
                                                             ),
                                                             Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topRight,
+                                                              alignment: Alignment.topRight,
                                                               child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top:
-                                                                            8.0,
-                                                                        left:
-                                                                            8.0,
-                                                                        right:
-                                                                            8.0),
+                                                                padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                                                                 child: InkWell(
                                                                   onTap: () {
-                                                                    deleteCardApi(
-                                                                        key_id);
+                                                                    deleteCardApi(key_id);
                                                                   },
-                                                                  child: Image
-                                                                      .asset(
-                                                                          "assets/images/delete1.png"),
+                                                                  child: Image.asset("assets/images/delete1.png"),
                                                                 ),
                                                               ),
                                                             ),
@@ -294,46 +236,25 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                                                       ),
                                                       color.sizedboxheight(5.0),
                                                       Container(
-                                                        alignment:
-                                                            Alignment.topLeft,
+                                                        alignment: Alignment.topLeft,
                                                         child: Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          mainAxisAlignment: MainAxisAlignment.start,
                                                           children: [
                                                             Text(
-                                                              "Size : " +
-                                                                  sellerCartModel
-                                                                      .data[
-                                                                          index]
-                                                                      .size
-                                                                      .toString(),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
+                                                              "Size : " + sellerCartModel.data[index].size.toString(),
+                                                              textAlign: TextAlign.start,
                                                               style: TextStyle(
-                                                                color: HexColor(
-                                                                    "#747474"),
+                                                                color: HexColor("#747474"),
                                                                 fontSize: 12.0,
                                                               ),
                                                             ),
-                                                            color.sizedboxwidth(
-                                                                5.0),
+                                                            color.sizedboxwidth(5.0),
                                                             Text(
-                                                              "color : " +
-                                                                  sellerCartModel
-                                                                      .data[
-                                                                          index]
-                                                                      .color,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
+                                                              "color : " + sellerCartModel.data[index].color,
+                                                              textAlign: TextAlign.start,
                                                               style: TextStyle(
-                                                                color: HexColor(
-                                                                    "#747474"),
+                                                                color: HexColor("#747474"),
                                                                 fontSize: 12.0,
                                                               ),
                                                             ),
@@ -344,132 +265,57 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                                                         child: Row(
                                                           children: [
                                                             Text(
-                                                              "Rs. " +
-                                                                  sellerCartModel
-                                                                      .data[
-                                                                          index]
-                                                                      .price
-                                                                      .toString(),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                              style: TextStyle(
-                                                                  color: color
-                                                                      .colortheme,
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  fontWeight: color
-                                                                      .fontWeight700),
+                                                              "Rs. " + sellerCartModel.data[index].price.toString(),
+                                                              textAlign: TextAlign.start,
+                                                              style: TextStyle(color: color.colortheme, fontSize: 16.0, fontWeight: color.fontWeight700),
                                                             ),
                                                             Container(
                                                               width: 60,
                                                             ),
                                                             Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              margin: EdgeInsets
-                                                                  .symmetric(
-                                                                      vertical:
-                                                                          10,
-                                                                      horizontal:
-                                                                          10),
+                                                              alignment: Alignment.center,
+                                                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                                               child: Row(
                                                                 children: [
                                                                   InkWell(
                                                                     onTap: () {
-                                                                      if (sellerCartModel
-                                                                              .data[index]
-                                                                              .quantity >
-                                                                          1) {
-                                                                        sellerCartModel
-                                                                            .data[
-                                                                                index]
-                                                                            .quantity = sellerCartModel
-                                                                                .data[index].quantity -
-                                                                            1;
-                                                                        QuantityPrice =
-                                                                            sellerCartModel.data[index].price *
-                                                                                sellerCartModel.data[index].quantity;
-                                                                        TotalAmount =
-                                                                            TotalAmount -
-                                                                                QuantityPrice;
+                                                                      if (sellerCartModel.data[index].quantity > 1) {
+                                                                        sellerCartModel.data[index].quantity = sellerCartModel.data[index].quantity - 1;
+                                                                        QuantityPrice = sellerCartModel.data[index].price * sellerCartModel.data[index].quantity;
+                                                                        TotalAmount = TotalAmount - QuantityPrice;
                                                                       }
 
-                                                                      quantityProductApi(
-                                                                          key_id,
-                                                                          sellerCartModel
-                                                                              .data[index]
-                                                                              .quantity
-                                                                              .toString());
+                                                                      quantityProductApi(key_id, sellerCartModel.data[index].quantity.toString());
                                                                     },
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .remove_circle,
-                                                                        color: Colors
-                                                                            .grey,
+                                                                    child: Container(
+                                                                      child: Icon(
+                                                                        Icons.remove_circle,
+                                                                        color: Colors.grey,
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   Container(
-                                                                    margin: EdgeInsets.only(
-                                                                        left: 5,
-                                                                        right:
-                                                                            5),
+                                                                    margin: EdgeInsets.only(left: 5, right: 5),
                                                                     child: Text(
-                                                                      sellerCartModel
-                                                                          .data[
-                                                                              index]
-                                                                          .quantity
-                                                                          .toString(),
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.w400,
+                                                                      sellerCartModel.data[index].quantity.toString(),
+                                                                      style: TextStyle(
+                                                                        color: Colors.black,
+                                                                        fontSize: 14,
+                                                                        fontWeight: FontWeight.w400,
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   InkWell(
                                                                     onTap: () {
-                                                                      sellerCartModel
-                                                                          .data[
-                                                                              index]
-                                                                          .quantity = sellerCartModel
-                                                                              .data[index]
-                                                                              .quantity +
-                                                                          1;
-                                                                      QuantityPrice = sellerCartModel
-                                                                              .data[
-                                                                                  index]
-                                                                              .price *
-                                                                          sellerCartModel
-                                                                              .data[index]
-                                                                              .quantity;
-                                                                      TotalAmount =
-                                                                          TotalAmount +
-                                                                              QuantityPrice;
-                                                                      quantityProductApi(
-                                                                          key_id,
-                                                                          sellerCartModel
-                                                                              .data[index]
-                                                                              .quantity
-                                                                              .toString());
+                                                                      sellerCartModel.data[index].quantity = sellerCartModel.data[index].quantity + 1;
+                                                                      QuantityPrice = sellerCartModel.data[index].price * sellerCartModel.data[index].quantity;
+                                                                      TotalAmount = TotalAmount + QuantityPrice;
+                                                                      quantityProductApi(key_id, sellerCartModel.data[index].quantity.toString());
                                                                     },
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .add_circle,
-                                                                        color: color
-                                                                            .colorthemedark,
+                                                                    child: Container(
+                                                                      child: Icon(
+                                                                        Icons.add_circle,
+                                                                        color: color.colorthemedark,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -505,10 +351,7 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                           : Container(
                               child: Text(
                                 "No Data",
-                                style: TextStyle(
-                                    color: color.colorblack,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14),
+                                style: TextStyle(color: color.colorblack, fontWeight: FontWeight.w400, fontSize: 14),
                               ),
                             ),
                     ),
@@ -531,19 +374,13 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                         Container(
                           child: Text(
                             "Total Amount",
-                            style: TextStyle(
-                                color: color.colorblack,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                            style: TextStyle(color: color.colorblack, fontSize: 14, fontWeight: FontWeight.w400),
                           ),
                         ),
                         Container(
                           child: Text(
                             TotalAmount.toString(),
-                            style: TextStyle(
-                                color: color.colorblack,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                            style: TextStyle(color: color.colorblack, fontSize: 14, fontWeight: FontWeight.w400),
                           ),
                         ),
                       ],
@@ -579,10 +416,7 @@ class _SellerCartScreenState extends State<SellerCartScreen> {
                       ),
                       child: Text(
                         "Pay Now",
-                        style: TextStyle(
-                            color: color.colorWhite,
-                            fontSize: 16.0,
-                            fontWeight: color.fontWeight500),
+                        style: TextStyle(color: color.colorWhite, fontSize: 16.0, fontWeight: color.fontWeight500),
                       ),
                     ),
                   ),

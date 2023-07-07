@@ -8,13 +8,12 @@ import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
 import 'package:flutter_sixvalley_ecommerce/view/basewidget/not_loggedin_widget.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../provider/profile_provider.dart';
 import '../../../utill/custom_themes.dart';
 import 'TamaraPaymentScreen.dart';
-
 class WalletScreen extends StatelessWidget {
   final bool isBacButtonExist;
 
@@ -81,14 +80,24 @@ class WalletScreen extends StatelessWidget {
         ],
       ),
       backgroundColor: ColorResources.getIconBg(context),
-      body: Container(
+      body:
+      Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: isGuestMode
             ? NotLoggedInWidget()
             : Container(
                 child: Consumer<WalletTransactionProvider>(builder: (context, profile, _) {
-                  return Column(
+                  return ModalProgressHUD(
+                      inAsyncCall: profile.is_loding,
+                      opacity: 0.7,
+                      progressIndicator: CircularProgressIndicator(
+                        color: Colors.orange,
+                      ),
+
+
+                      child:
+                    Column(
                     children: [
                       SizedBox(
                         height: Dimensions.PADDING_SIZE_LARGE,
@@ -231,7 +240,7 @@ class WalletScreen extends StatelessWidget {
                           ),
                         ),
                     ],
-                  );
+                  ));
                 }),
               ),
       ),

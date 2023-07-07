@@ -28,7 +28,7 @@ class TamaraPaymentScreen extends StatefulWidget {
 }
 
 class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
-  String restCheckout = "https://api-sandbox.tamara.co/checkout";
+  String restCheckout = "${AppConstants.BASE_URL}api/v1/wallet/add-amount?customer_id=13&amount=300";
   int likeButtonColor = 0;
   double rupey = 100.00;
   double rupey1 = 200.00;
@@ -51,7 +51,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
         centerTitle: true,
         backgroundColor: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : Colors.white,
         title: Text(
-          ('Payment'),
+         "${getTranslated ('Payment',context).toString()}",
           textAlign: TextAlign.center,
           style: titilliumRegular.copyWith(
             fontSize: 20,
@@ -72,11 +72,10 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
       ),
       bottomNavigationBar: InkWell(
         onTap: () async {
-          // await startCheckout(widget.customerId, AmountController.text);
-          await amountSubmit(context, widget.customerId.toString(), amountController.text);
-          Navigator.of(context).pop();
-
-
+            // startCheckout( context, widget.customerId.toString(), amountController.text );
+            await amountSubmit(context, widget.customerId.toString(), amountController.text);
+           Navigator.of(context).pop(
+           );
           // Navigator.of(context).push(MaterialPageRoute(
           //   builder: (context) {
           //     return TamaraCheckOutScreen(
@@ -96,7 +95,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
             color: Color(0xFFFE8551),
           ),
           child: Text(
-            "Add Money",
+            "${getTranslated('Add Money', context)}",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,),
           ),
         ),
@@ -108,7 +107,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Add Money to Wallet",
+             "${ getTranslated('Add Money to Wallet', context)}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,),
             ),
             Container(
@@ -117,7 +116,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
               child: CustomTextField(
                 maxLine: 2,
                 controller: amountController,
-                hintText: ('ENTER Amount'),
+                hintText: getTranslated('ENTER Amount',context),
                 textInputAction: TextInputAction.done,
                 textInputType: TextInputType.number,
                 inputFormatters: [
@@ -216,14 +215,11 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
     final random = Random();
     const allChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-';
 
-    // below statement will generate a random string of length using the characters
-    // and length provided to it
     final randomString = List.generate(count, (index) => allChars[random.nextInt(allChars.length)]).join();
-    // return the generated string
     return randomString;
   }
 
-  Future<void> startCheckout(String customerId, double amount) async {
+   startCheckout(BuildContext context, String customerId, String amount) async {
     var body = {
       "order_reference_id": generateRandomString(26),
       "total_amount": {
@@ -243,7 +239,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
           "sku": "SA-12436",
           "quantity": 1,
           "total_amount": {
-            "amount": amount.toStringAsFixed(2),
+            "amount": amount,
             "currency": "SAR",
           }
         }
@@ -288,7 +284,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
           "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhY2NvdW50SWQiOiI4NzBlNTllOC1mYTFjLTRjZWEtODI2Ny00YWQyMGFiOGY5M2EiLCJ0eXBlIjoibWVyY2hhbnQiLCJzYWx0IjoiZWU4YWEwZWU4YzE4N2Y5OTBhYmVkN2Q2NWQ2ZjIzY2QiLCJpYXQiOjE2ODI5ODE3MjgsImlzcyI6IlRhbWFyYSJ9.wqz-BZfrC5HovN_hY8BAoAj5gvJGIDmdwEbbST63kEq9CoOyEgzwDOvU7C1vAekww8L7AEUb398aYM9-rVsukdbMBHnnwuqLdJvLbEY9NUCwX9ZQfe4PwF79ha1NzaNku0SeLGhgfQY_GTYq-e9kMcJuQ7IFD0UFs32GU1zcozcI4oKOMZlJVpQQPzKC4o_sWmqGFv5GOhok_L-kkGeqgi6X7lkRy7xTG-hkECIPT7E3Ty9VezvTeWF5zNU_9AFDUMldyquFG41gd-Q0WT5ybbJwjcPv3u6NejSInjzr51MiscIy4tXaX-Eej4NYFbk4aMD5lS6phPmblFJQHHRK_Q",
     };
 
-    http.Response response = await http.post(Uri.parse(restCheckout), headers: header, body: body);
+    http.Response response = await http.post(Uri.parse("${AppConstants.BASE_URL}${AppConstants.SUBMIT_AMOUNT}customer_id=$customerId&amount=${amount}"), headers: header, body: body);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -317,10 +313,9 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
   amountSubmit(BuildContext context, String customerId, String amount) async {
     Dio dio = Dio();
     try {
-      // var response = await dio.get("${AppConstants.BASE_URL}${AppConstants.SUBMIT_AMOUNT}customer_id=$customerId&amount=${bidAmount}");
-      var response = await dio.post("http://ishopper.sa/api/v1/wallet/add-amount?customer_id=$customerId&amount=$amount");
+       var response = await dio.post("${AppConstants.BASE_URL}${AppConstants.SUBMIT_AMOUNT}customer_id=$customerId&amount=${amount}");
       final responseData = json.decode(response.toString());
-      print(" responseData ==========> $responseData");
+      print(" responseDataAmount ==========> $responseData");
       if (responseData['status'] == 200) {
         var message = responseData["message"].toString();
         Fluttertoast.showToast(msg: message.toString());
