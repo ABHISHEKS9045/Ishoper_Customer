@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -29,6 +31,43 @@ class ProductDetailsProvider extends ChangeNotifier {
   String _sharableLink;
   String _errorText;
   bool _hasConnection = true;
+
+
+
+
+  List auctionProductData = [];
+  List<bool> isShowList = [];
+
+
+  Future<void> getAuctionproduct(productId) async {
+    String url = "https://ishopper.sa/api/v1/products/details?id=$productId";
+
+    try {
+      var response = await Dio().get(url);
+      print("getAuctionproduct $response");
+
+      final responseData = response.data;
+
+
+        auctionProductData = response.data;
+        print("auctionProductDataaa$responseData");
+        isShowList =  List.filled(auctionProductData.length,false);
+        notifyListeners();
+
+
+    } catch (e) {
+      if (e is DioError) {
+        if (e.response?.data['message'] == null) {
+          // Handle error
+        } else {
+          // Handle error
+        }
+      }
+
+      print('exception>>>>${e.toString()}');
+    }
+  }
+
 
   List<re.ReviewModel> get reviewList => _reviewList;
   int get imageSliderIndex => _imageSliderIndex;

@@ -3,7 +3,7 @@ import 'package:sixvalley_vendor_app/utill/images.dart';
 
 class AppConstants {
   static const String APP_NAME = 'Seller';
-  static const String BASE_URL = 'http://ishopper.sa';
+  static const String BASE_URL = 'https://ishopper.sa';
   static const String imageBaseUrl = "$BASE_URL/storage/app/public/custom/product/";
   static const String LOGIN_URI = '/api/v2/seller/auth/login';
   static const String CONFIG_URI = '/api/v1/config';

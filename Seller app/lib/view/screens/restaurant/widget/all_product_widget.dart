@@ -21,6 +21,7 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
     final ScrollController scrollController = ScrollController();
     scrollController?.addListener(() {
       if(scrollController.position.maxScrollExtent == scrollController.position.pixels
@@ -39,18 +40,20 @@ class ProductView extends StatelessWidget {
 
         }
       }
+      print('productType :$productType');
+
     });
 
 
     return Consumer<ProductProvider>(
       builder: (context, prodProvider, child) {
+
         List<Product> productList;
         productList = prodProvider.sellerProductList;
 
 
         return Stack(
           children: [
-
             SingleChildScrollView(
               controller: scrollController,
               child: Column(children: [
@@ -78,6 +81,9 @@ class ProductView extends StatelessWidget {
               right: 20,
               child: InkWell(
                 onTap: (){
+
+                  debugPrint("on add product clicked");
+
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddProductScreen(
                     productType: productType,
 

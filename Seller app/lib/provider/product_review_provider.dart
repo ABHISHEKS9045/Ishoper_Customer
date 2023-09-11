@@ -17,6 +17,7 @@ class ProductReviewProvider extends ChangeNotifier{
 
   Future<void> getReviewList(BuildContext context) async{
     ApiResponse apiResponse = await productReviewRepo.productReviewList();
+    print("Review Product list =====================>$apiResponse");
 
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _reviewList = [];
@@ -24,7 +25,7 @@ class ProductReviewProvider extends ChangeNotifier{
         ReviewModel reviewModel = ReviewModel.fromJson(review);
         _reviewList.add(reviewModel);
       });
-      print(reviewList);
+      print("reviewList======================>$reviewList");
 
     }else{
       ApiChecker.checkApi(context, apiResponse);

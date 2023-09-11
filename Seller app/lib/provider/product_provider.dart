@@ -39,6 +39,7 @@ class ProductProvider extends ChangeNotifier {
       _offsetList.add(offset);
       ApiResponse apiResponse = await productRepo.getSellerProductList(sellerId, offset,languageCode);
       if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+        print("apiResponse.response.data${apiResponse.response.data}");
         _sellerProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
         _sellerPageSize = ProductModel.fromJson(apiResponse.response.data).totalSize;
         _firstLoading = false;

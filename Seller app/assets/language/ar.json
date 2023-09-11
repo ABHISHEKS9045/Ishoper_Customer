@@ -311,5 +311,11 @@
   "note": "ملحوظة",
   "note_required": "ملاحظة مطلوبة",
   "deliveryman_contact_details": "تفاصيل الاتصال برجل التوصيل",
-  "product_was_deleted": "تم حذف المنتج"
+  "product_was_deleted": "تم حذف المنتج",
+  "Successfully Added" : "أضيف بنجاح",
+  "Select Your Product Type" : "حدد نوع المنتج الخاص بك",
+  "Please Select Your Product Type." : "الرجاء تحديد نوع المنتج الخاص بك.",
+  "Auction_details" : "تفاصيل المزاد",
+  "Auction" : "مزاد علني",
+  "view_auction_detail" : "عرض تفاصيل المزاد"
 }

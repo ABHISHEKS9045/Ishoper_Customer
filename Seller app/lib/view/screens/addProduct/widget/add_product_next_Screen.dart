@@ -439,6 +439,7 @@ class _AddProductNextScreenState extends State<AddProductNextScreen> {
                                 Switch(
                                   value: resProvider.attributeList[0].active,
                                   onChanged: (value) {
+                                    print("resProvider.attributeList[0].active==>${resProvider.attributeList[0].active}");
                                     resProvider.toggleAttribute(context, 0, widget.product);
                                   },
                                   activeColor: color.colortheme,
@@ -1041,7 +1042,7 @@ class _AddProductNextScreenState extends State<AddProductNextScreen> {
                               controller: _youtubeLinkController,
                               focusNode: _youtubeLinkNode,
                               textInputAction: TextInputAction.done,
-                              hintText: 'www.youtube.com/6valley',
+                              hintText: 'www.youtube.com/Ishopper',
                             ),
 
                             SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
@@ -1247,11 +1248,6 @@ class _AddProductNextScreenState extends State<AddProductNextScreen> {
                                       } else if (_currentStock.isEmpty) {
                                         showCustomSnackBar(getTranslated('enter_total_quantity', context), context);
                                       }
-                                      // else if (_tax.isEmpty) {
-                                      //   showCustomSnackBar(getTranslated('enter_tax', context),context);
-                                      // } else if (_discount.isEmpty) {
-                                      //   showCustomSnackBar(getTranslated('enter_product_discount', context),context);
-                                      // }
                                       else if (resProvider.categoryIndex == 0) {
                                         showCustomSnackBar(getTranslated('select_a_category', context), context);
                                       } else if (_haveBlankVariant) {
@@ -1348,7 +1344,7 @@ class _AddProductNextScreenState extends State<AddProductNextScreen> {
                                     child: CircularProgressIndicator(
                                     color: color.colortheme,
                                     valueColor: AlwaysStoppedAnimation<Color>(color.colorWhite),
-                                  )),
+                                  ),),
                           ],
                         )
                       : Padding(
@@ -1357,7 +1353,7 @@ class _AddProductNextScreenState extends State<AddProductNextScreen> {
                               child: CircularProgressIndicator(
                             color: color.colortheme,
                             valueColor: AlwaysStoppedAnimation<Color>(color.colorWhite),
-                          )),
+                          ),),
                         ),
                 );
               },

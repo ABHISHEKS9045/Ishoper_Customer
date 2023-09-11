@@ -310,5 +310,13 @@
   "note": "Note",
   "note_required": "Note Required",
   "deliveryman_contact_details": "Delivery man contact details",
-  "product_was_deleted": "Product was deleted"
+  "product_was_deleted": "Product was deleted",
+  "Successfully Added" : "Successfully Added",
+  "Select Your Product Type" : "Select Your Product Type",
+  "Please Select Your Product Type." : "Please Select Your Product Type.",
+  "Auction_details" : "Auction Details",
+  "Auction" : "Auction",
+  "view_auction_detail" : "view auction detail"
+
+
 }

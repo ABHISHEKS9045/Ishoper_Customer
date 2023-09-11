@@ -24,7 +24,6 @@ class ReviewWidget extends StatelessWidget {
         children: [
           Card(
             child: Column(children: [
-
               Padding(
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                 child: Row(
@@ -47,7 +46,6 @@ class ReviewWidget extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10,),
-
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -76,7 +74,7 @@ class ReviewWidget extends StatelessWidget {
 
             ],),
           ),
-          // Off
+
          ],
       ),
     );
@@ -91,6 +89,7 @@ class ReviewShimmer extends StatelessWidget {
       highlightColor: Colors.grey[100],
       enabled: Provider.of<ProductDetailsProvider>(context).reviewList == null,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
         Row(children: [
           CircleAvatar(
             maxRadius: 15,

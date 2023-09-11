@@ -72,6 +72,7 @@ class BannerProvider extends ChangeNotifier {
     ApiResponse apiResponse = await bannerRepo.getProductDetails(productId);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _product = (Product.fromJson(apiResponse.response.data));
+      print("product==========${_product}");
     } else {
       showCustomSnackBar(apiResponse.error.toString(), context);
     }

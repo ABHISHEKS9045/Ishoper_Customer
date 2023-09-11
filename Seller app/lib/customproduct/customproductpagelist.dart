@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sixvalley_vendor_app/utill/app_constants.dart';
 import 'package:sixvalley_vendor_app/utill/color_resources2.dart';
@@ -10,6 +11,7 @@ import '../utill/images.dart';
 import 'CustomProductDetail.dart';
 import 'CustomProductModel.dart';
 import 'CustomService.dart';
+import 'customproductmodelpage.dart';
 
 class CustomProductListScreen extends StatefulWidget {
   const CustomProductListScreen({Key key}) : super(key: key);
@@ -19,18 +21,20 @@ class CustomProductListScreen extends StatefulWidget {
 }
 
 class _CustomProductListScreenState extends State<CustomProductListScreen> {
+
+  String TAG = "_CustomProductListScreenState";
+
   ColorResources color = ColorResources();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     customProductApi();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   final custom =
-    //       Provider.of<CustomProductlistModel>(context, listen: false);
-    //   custom.customproductlist();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final custom =
+          Provider.of<CustomProductlistModel>(context, listen: false);
+      custom.customproductlist();
+    });
   }
 
   SharedPreferences pref;
@@ -42,6 +46,8 @@ class _CustomProductListScreenState extends State<CustomProductListScreen> {
     setState(() {
       isLoading = false;
     });
+
+    debugPrint("$TAG custom product API call token =========> ${pref.getString(AppConstants.TOKEN).toString()}");
 
     customProductModel = await CustomService.customProduct(pref.getString(AppConstants.TOKEN).toString());
 
@@ -64,6 +70,7 @@ class _CustomProductListScreenState extends State<CustomProductListScreen> {
         centerTitle: true,
         title: Text(
           "Custom Product",
+
           style: TextStyle(color: color.colorblack),
         ),
       ),
@@ -187,12 +194,18 @@ class _CustomProductListScreenState extends State<CustomProductListScreen> {
                       style: TextStyle(fontSize: 20, color: Colors.orange),
                     )),
             )
-          : Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(
-                color: color.colortheme,
-              ),
-            ),
+          : Center(
+          child: Text(
+            "No Data found!",
+            style: TextStyle(fontSize: 20, color: Colors.orange),
+          )),
+     // : Container(
+     //          alignment: Alignment.center,
+     //          child: CircularProgressIndicator(
+     //            color: color.colortheme,
+     //
+     //          ),
+     //        ),
     );
   }
 

@@ -12,15 +12,24 @@ class ProductReview extends StatelessWidget {
           List<ReviewModel> reviewList;
           reviewList = reviewProvider.reviewList;
           return Column(children: [
+            reviewProvider.reviewList.isNotEmpty ?
             ListView.builder(
               itemCount: reviewList.length,
+              // itemCount: 1,
               padding: EdgeInsets.all(0),
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return ReviewWidget(reviewModel: reviewList[index]);
+                return
+                   ReviewWidget(reviewModel: reviewList[index]);
               },
+            ):
+            Container(
+            alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 40),
+              child: Text('No data Found!!', style: TextStyle(fontSize: 20, color: Colors.orange)),
             ),
+
 
           ]);
         },

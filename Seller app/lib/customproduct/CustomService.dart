@@ -9,13 +9,13 @@ class CustomService {
   static Future<CustomProductModel> customProduct(String token) async {
     final response = await http.get(
       Uri.parse("http://ishopper.sa/api/v1/sellerlist"),
-      headers: <String, String>{
+      headers: <String, String> {
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer " + token
       },
     );
 
-    print("custom Product response>>>" + response.body);
+    print("custom Product response =======> " + response.body);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);

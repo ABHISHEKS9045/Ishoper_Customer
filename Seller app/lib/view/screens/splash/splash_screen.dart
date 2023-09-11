@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sixvalley_vendor_app/helper/network_info.dart';
@@ -15,34 +16,114 @@ import 'package:sixvalley_vendor_app/view/screens/auth/auth_screen.dart';
 import 'package:sixvalley_vendor_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:sixvalley_vendor_app/view/screens/splash/widget/splash_painter.dart';
 
+import '../../../provider/profile_provider.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  static const String TAG = "_SplashScreenState";
+  GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
+  StreamSubscription<ConnectivityResult> _onConnectivityChanged;
+
+  // checkLoginStatus() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //   debugPrint("$TAG login status =========> ${prefs.getBool('isLoggedIn')}");
+  //
+  //   var loginStatus = prefs.getBool('isLoggedIn');
+  //   if (loginStatus == true) {
+  //     Get.offAll(() => AuthScreen());
+  //   } else if (loginStatus == false) {
+  //     Get.offAll(
+  //       () => DashBoardScreen(),
+  //     );
+  //   } else {
+  //     Get.offAll(() => AuthScreen());
+  //   }
+  // }
+
   @override
   void initState() {
+    // checkLoginStatus();
+    debugPrint("$TAG login status =========> ${Provider.of<AuthProvider>(context, listen: false).isLoggedIn()}");
     super.initState();
-    NetworkInfo.checkConnectivity(context);
-    Provider.of<SplashProvider>(context, listen: false)
-        .initConfig(context)
-        .then((bool isSuccess) {
+
+    bool _firstTime = true;
+    _onConnectivityChanged = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (!_firstTime) {
+        bool isNotConnected = result != ConnectivityResult.wifi && result != ConnectivityResult.mobile;
+        isNotConnected ? SizedBox() : ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: isNotConnected ? Colors.red : Colors.green,
+          duration: Duration(seconds: isNotConnected ? 6000 : 3),
+          content: Text(
+            isNotConnected ? getTranslated('no_connection', context) : getTranslated('connected', context),
+            textAlign: TextAlign.center,
+          ),
+        ));
+        if (!isNotConnected) {
+          _route();
+        }
+      }
+      _firstTime = false;
+    });
+
+    Timer(
+      Duration(seconds: 2),
+          () => _route(),
+    );
+    // _route();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _onConnectivityChanged.cancel();
+  }
+
+  void _route() {
+    Provider.of<SplashProvider>(context, listen: false).initConfig(context).then((bool isSuccess) {
       if (isSuccess) {
+        Provider.of<SplashProvider>(context, listen: false).initSharedPrefData();
         Timer(Duration(seconds: 1), () {
-          if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-            Provider.of<AuthProvider>(context, listen: false)
-                .updateToken(context);
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => DashboardScreen()));
-          } else {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => AuthScreen()));
-          }
-        });
+                  if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .updateToken(context);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => DashboardScreen()));
+                  } else {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => AuthScreen()));
+                  }
+                });
       }
     });
   }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   NetworkInfo.checkConnectivity(context);
+  //   Provider.of<SplashProvider>(context, listen: false)
+  //       .initConfig(context)
+  //       .then((bool isSuccess) {
+  //     if (isSuccess) {
+  //       Timer(Duration(seconds: 1), () {
+  //         if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+  //           Provider.of<AuthProvider>(context, listen: false)
+  //               .updateToken(context);
+  //           Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //               builder: (BuildContext context) => DashboardScreen()));
+  //         } else {
+  //           Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //               builder: (BuildContext context) => AuthScreen()));
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

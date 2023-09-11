@@ -46,6 +46,7 @@ class ConfigModel {
   List<Language> get languageList => _languageList;
   List<ColorList> get colors => _colors;
   List<String> get unit => _unit;
+
   String get aboutUs => _aboutUs;
   String get privacyPolicy => _privacyPolicy;
   List<Faq> get faq => _faq;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sixvalley_vendor_app/view/screens/addProduct/widget/product_specification_view.dart';
 import 'package:sixvalley_vendor_app/view/screens/addProduct/widget/product_title_view.dart';
-
 import '../../../customproduct/product_image_view.dart';
 import '../../../data/model/response/product_model.dart';
 import '../../../localization/language_constrants.dart';
@@ -20,8 +19,10 @@ import 'widget/rating_bar.dart';
 
 class ProductDetails extends StatefulWidget {
   final Product product;
+  final productType;
+  final productId;
   ProductDetails({
-    @required this.product,
+    @required this.product, this.productType, this.productId,
   });
 
   @override
@@ -112,6 +113,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           padding: EdgeInsets.all(
                                               Dimensions.PADDING_SIZE_SMALL),
                                           child: ProductSpecification(
+                                            productId: widget.productId,
+
+                                            productType: widget.productType,
                                               productSpecification:
                                                   widget.product.details ?? ''),
                                         )
@@ -139,6 +143,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 fontSize:
                                                     Dimensions.FONT_SIZE_LARGE),
                                           ),
+
                                           SizedBox(
                                             height:
                                                 Dimensions.PADDING_SIZE_DEFAULT,

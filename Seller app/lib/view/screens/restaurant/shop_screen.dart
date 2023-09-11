@@ -29,32 +29,31 @@ class ShopScreen extends StatefulWidget {
   @override
   _ShopScreenState createState() => _ShopScreenState();
 }
+
 final List<String> productType = [
   'Product',
   'Auction Product',
 ];
 String selectedValue;
+
 class _ShopScreenState extends State<ShopScreen> {
   String sellerId = '0';
-  var selectedType ='';
+  var selectedType = '';
 
-
-  saveProductType(value)async{
+  saveProductType(value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('productType', value);
     print(prefs.get('productType'));
-
   }
+
   Future<void> _loadData(BuildContext context, bool reload) async {
-
-    String languageCode = Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode == 'US'?'en':Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode.toLowerCase();
+    String languageCode = Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode == 'US' ? 'en' : Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode.toLowerCase();
     Provider.of<ProductProvider>(context, listen: false).initSellerProductList(sellerId, 1, context, languageCode, reload: true);
-    await Provider.of<ProductReviewProvider>(context, listen: false).getReviewList( context);
-
+    await Provider.of<ProductReviewProvider>(context, listen: false).getReviewList(context);
   }
 
+  ColorResources color = ColorResources();
 
-   ColorResources color = ColorResources();
   @override
   Widget build(BuildContext context) {
     Provider.of<ShopProvider>(context, listen: false).selectedIndex;
@@ -64,67 +63,68 @@ class _ShopScreenState extends State<ShopScreen> {
     Provider.of<ShopProvider>(context, listen: false).getShopInfo(context);
     return Scaffold(
       // appBar: CustomAppBar(title:''),
-        body: SafeArea(
-            child: Consumer<ShopProvider>(
-                builder: (context, resProvider, child) {
-                  return resProvider.shopModel !=null ? resProvider.shopModel != null ? Container(
+      body: SafeArea(
+        child: Consumer<ShopProvider>(builder: (context, resProvider, child) {
+          return resProvider.shopModel != null
+              ? resProvider.shopModel != null
+                  ? Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Stack(
                             children: [
                               Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:Radius.circular(20))
-                                ),
+                                decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
                                 width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.width/2.5,
+                                height: MediaQuery.of(context).size.width / 2.5,
                                 child: FittedBox(
                                   fit: BoxFit.fill,
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:Radius.circular(20)),
+                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                                     child: CachedNetworkImage(
                                       fit: BoxFit.fill,
-                                      placeholder: (ctx, url) => Image.asset(Images.placeholder_image,),
-                                      errorWidget: (ctx,url,err) => Image.asset(Images.placeholder_image,),
-                                      imageUrl: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.shopImageUrl}/banner/${resProvider.shopModel.banner}',),
+                                      placeholder: (ctx, url) => Image.asset(
+                                        Images.placeholder_image,
+                                      ),
+                                      errorWidget: (ctx, url, err) => Image.asset(
+                                        Images.placeholder_image,
+                                      ),
+                                      imageUrl: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/banner/${resProvider.shopModel.banner}',
+                                    ),
                                   ),
                                 ),
                               ),
-
-
                               InkWell(
-                                onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (_) => ShopUpdateScreen())),
+                                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ShopUpdateScreen())),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top:14.0, right: 14),
+                                  padding: const EdgeInsets.only(top: 14.0, right: 14),
                                   child: Align(
                                     alignment: Alignment.centerRight,
-                                    child: Container(width: 25,height: 25,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                                            color: color.colortheme
-                                        ),
+                                    child: Container(
+                                        width: 25,
+                                        height: 25,
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: color.colortheme),
                                         child: Padding(
                                           padding: const EdgeInsets.all(5.0),
-                                          child: Image.asset(Images.edit,color: Colors.white,),
+                                          child: Image.asset(
+                                            Images.edit,
+                                            color: Colors.white,
+                                          ),
                                         )),
                                   ),
                                 ),
                               ),
                             ],
-
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                             child: Row(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      border: Border.all(color: Colors.grey)
-                                  ),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey)),
                                   width: 70,
                                   height: 60,
                                   child: ClipRRect(
@@ -132,15 +132,23 @@ class _ShopScreenState extends State<ShopScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: CachedNetworkImage(
-                                        placeholder: (ctx, url) => Image.asset(Images.placeholder_image,),
-                                        errorWidget: (ctx,url,err) => Image.asset(Images.placeholder_image,),
-                                        imageUrl: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.shopImageUrl}/${resProvider.shopModel.image}',),
+                                        placeholder: (ctx, url) => Image.asset(
+                                          Images.placeholder_image,
+                                        ),
+                                        errorWidget: (ctx, url, err) => Image.asset(
+                                          Images.placeholder_image,
+                                        ),
+                                        imageUrl: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/${resProvider.shopModel.image}',
+                                      ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 10,),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Flexible(
-                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '${resProvider.shopModel.name ?? ''}',
@@ -149,91 +157,96 @@ class _ShopScreenState extends State<ShopScreen> {
                                       Text(
                                         '${resProvider.shopModel.address ?? ''}',
                                         style: robotoRegular.copyWith(color: ColorResources.getSubTitleColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),
-                                        maxLines: 2, overflow: TextOverflow.ellipsis,softWrap: false,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
                                       ),
-
-                                      Row(children: [
-                                        Container(
-                                            width: 16,
-                                            height: 16,
-                                            child: Image.asset(Images.star)),
-                                        SizedBox(width: 5,),
-                                        Text('${resProvider.shopModel.ratting ?? ''}', style: robotoTitleRegular.copyWith(color: ColorResources.getTextColor(context), fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),),
-                                        SizedBox(width: 5,),
-                                        Text('${resProvider.shopModel.rattingCount ?? ''}',style: robotoRegular.copyWith(color: ColorResources.getSubTitleColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),),
-                                        SizedBox(width: 5,),
-                                        Text(getTranslated('ratting', context),style: robotoRegular.copyWith(color: ColorResources.getSubTitleColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),)
-                                      ],)
-
-                                    ],),
-                                )
-
-                              ],),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 8,left: 15,right: 15),
-                            color:  color.colorWhite,
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                           child: DropdownButtonFormField2(
-                              decoration: InputDecoration(
-                                isDense: true,
-                                contentPadding: EdgeInsets.zero,
-
-
-                              ),
-                              isExpanded: true,
-                              hint: const Text(
-                                'Select Your Product Type',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              items: productType
-                                  .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                                      Row(
+                                        children: [
+                                          Container(width: 16, height: 16, child: Image.asset(Images.star)),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            '${resProvider.shopModel.ratting ?? ''}',
+                                            style: robotoTitleRegular.copyWith(color: ColorResources.getTextColor(context), fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            '${resProvider.shopModel.rattingCount ?? ''}',
+                                            style: robotoRegular.copyWith(color: ColorResources.getSubTitleColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            getTranslated('ratting', context),
+                                            style: robotoRegular.copyWith(color: ColorResources.getSubTitleColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),
+                                          )
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                ),
-                              ))
-                                  .toList(),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please Select Your Product Type.';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-
-                                selectedValue = value.toString();
-                                selectedType = selectedValue;
-                                print(selectedType);
-                                saveProductType(selectedValue);
-
-
-                                //Do something when changing the item if you want.
-                              },
-                              onSaved: (value) {
-
-                              },
-                              buttonStyleData: const ButtonStyleData(
-
-                                padding: EdgeInsets.only(left: 0, right: 0),
-                              ),
-                              iconStyleData: const IconStyleData(
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.black45,
-                                ),
-                                iconSize: 30,
-                              ),
-                              dropdownStyleData: DropdownStyleData(
-
-                              ),
+                                )
+                              ],
                             ),
                           ),
-
+                          // Container(
+                          //   margin: EdgeInsets.only(top: 8, left: 15, right: 15),
+                          //   color: color.colorWhite,
+                          //   height: 40,
+                          //   width: MediaQuery.of(context).size.width,
+                          //   child: DropdownButtonFormField2(
+                          //     decoration: InputDecoration(
+                          //       isDense: true,
+                          //       contentPadding: EdgeInsets.zero,
+                          //     ),
+                          //     isExpanded: true,
+                          //     hint: const Text(
+                          //       'Select Your Product Type',
+                          //       style: TextStyle(fontSize: 15),
+                          //     ),
+                          //     items: productType
+                          //         .map((item) => DropdownMenuItem<String>(
+                          //               value: item,
+                          //               child: Text(
+                          //                 item,
+                          //                 style: const TextStyle(
+                          //                   fontSize: 14,
+                          //                 ),
+                          //               ),
+                          //             ))
+                          //         .toList(),
+                          //     validator: (value) {
+                          //       if (value == null) {
+                          //         return 'Please Select Your Product Type.';
+                          //       }
+                          //       return null;
+                          //     },
+                          //     onChanged: (value) {
+                          //       selectedValue = value.toString();
+                          //       selectedType = selectedValue;
+                          //       print(selectedType);
+                          //       saveProductType(selectedValue);
+                          //
+                          //       //Do something when changing the item if you want.
+                          //     },
+                          //     onSaved: (value) {},
+                          //     buttonStyleData: const ButtonStyleData(
+                          //       padding: EdgeInsets.only(left: 0, right: 0),
+                          //     ),
+                          //     iconStyleData: const IconStyleData(
+                          //       icon: Icon(
+                          //         Icons.arrow_drop_down,
+                          //         color: Colors.black45,
+                          //       ),
+                          //       iconSize: 30,
+                          //     ),
+                          //     dropdownStyleData: DropdownStyleData(),
+                          //   ),
+                          // ),
                           Padding(
                             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                             child: Stack(
@@ -251,21 +264,14 @@ class _ShopScreenState extends State<ShopScreen> {
                                   ),
                                 ),
                                 Consumer<ShopProvider>(
-                                  builder: (context,authProvider,child)=>Row(
+                                  builder: (context, authProvider, child) => Row(
                                     children: [
                                       InkWell(
                                         onTap: () => _pageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeInOut),
                                         child: Column(
                                           children: [
-
                                             Text(getTranslated('all_products', context), style: authProvider.selectedIndex == 0 ? titilliumSemiBold : titilliumRegular),
-                                            Container(
-                                                height: 1,
-                                                width: MediaQuery.of(context).size.width/2-30,
-                                                margin: EdgeInsets.only(top: 8),
-                                                color: authProvider.selectedIndex == 1 ? color.colortheme : Colors.transparent
-                                            ),
-
+                                            Container(height: 1, width: MediaQuery.of(context).size.width / 2 - 30, margin: EdgeInsets.only(top: 8), color: authProvider.selectedIndex == 1 ? color.colortheme : Colors.transparent),
                                           ],
                                         ),
                                       ),
@@ -275,12 +281,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                         child: Column(
                                           children: [
                                             Text(getTranslated('product_review', context), style: authProvider.selectedIndex == 1 ? robotoTitleRegular : robotoRegular),
-                                            Container(
-                                                height: 1,
-                                                width: MediaQuery.of(context).size.width/2-30,
-                                                margin: EdgeInsets.only(top: 8),
-                                                color: authProvider.selectedIndex == 1 ? color.colortheme : Colors.transparent
-                                            ),
+                                            Container(height: 1, width: MediaQuery.of(context).size.width / 2 - 30, margin: EdgeInsets.only(top: 8), color: authProvider.selectedIndex == 1 ? color.colortheme : Colors.transparent),
                                           ],
                                         ),
                                       ),
@@ -292,16 +293,13 @@ class _ShopScreenState extends State<ShopScreen> {
                           ),
                           Expanded(
                             child: Consumer<ShopProvider>(
-                              builder: (context,shopProvider,child)=>PageView.builder(
+                              builder: (context, shopProvider, child) => PageView.builder(
                                 itemCount: 2,
                                 controller: _pageController,
                                 itemBuilder: (context, index) {
                                   if (shopProvider.selectedIndex == 0) {
-                                    return ProductView(
-                                       productType: selectedType,
 
-
-                                        sellerId: shopProvider.shopModel.id);
+                                    return ProductView(productType: selectedType, sellerId: shopProvider.shopModel.id);
                                   } else {
                                     return ProductReview();
                                   }
@@ -313,16 +311,17 @@ class _ShopScreenState extends State<ShopScreen> {
                             ),
                           ),
                         ],
-                      )
-
-                  )
-                      : NoDataScreen()
-                      : Center(child: CircularProgressIndicator(
-                        color: color.colortheme,
-                        valueColor: AlwaysStoppedAnimation<Color>(color.colorWhite)));
-                })
-        )
+                      ),
+                    )
+                  : NoDataScreen()
+              : Center(
+                  child: CircularProgressIndicator(
+                    color: color.colortheme,
+                    valueColor: AlwaysStoppedAnimation<Color>(color.colorWhite),
+                  ),
+                );
+        }),
+      ),
     );
   }
 }
-

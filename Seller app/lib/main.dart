@@ -38,18 +38,18 @@ import 'di_container.dart' as di;
 import 'notification/my_notification.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await di.init();
   final NotificationAppLaunchDetails notificationAppLaunchDetails =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   int _orderID;
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     _orderID = (notificationAppLaunchDetails.payload != null &&
-            notificationAppLaunchDetails.payload.isNotEmpty)
+        notificationAppLaunchDetails.payload.isNotEmpty)
         ? int.parse(notificationAppLaunchDetails.payload)
         : null;
   }
@@ -61,8 +61,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<LocalizationProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ShopProvider>()),
@@ -73,10 +72,8 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<TransactionProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<RestaurantProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<ProductReviewProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<ProductDetailsProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ProductReviewProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ProductDetailsProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ShippingProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<DeliveryManProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<RefundProvider>()),
@@ -99,7 +96,7 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-          title: ' Seller',
+          title: 'iShopper Seller',
           debugShowCheckedModeBanner: false,
           navigatorKey: navigatorKey,
           theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,

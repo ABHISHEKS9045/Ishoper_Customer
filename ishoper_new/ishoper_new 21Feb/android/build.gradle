@@ -1,0 +1,44 @@
+buildscript {
+    ext.kotlin_version = '1.7.10'
+//    ext {
+//        clientId = "<CLIENT_ID>"
+//        sdkVersion = "2.1.13"
+//    }
+    repositories {
+        google()
+        jcenter()
+//        maven { url "https://maven.juspay.in/jp-build-packages/hypersdk-asset-download/releases/" }
+    }
+
+    dependencies {
+//        classpath 'com.android.tools.build:gradle:7.2.1'
+//        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'com.google.gms:google-services:4.3.14'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath 'in.juspay:hypersdk-asset-plugin:1.0.3'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << '-Xlint:-options'
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

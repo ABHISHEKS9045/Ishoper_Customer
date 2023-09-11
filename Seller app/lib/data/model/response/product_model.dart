@@ -46,6 +46,7 @@ class Product {
   String addedBy;
   int userId;
   String name;
+  int productType;
   int brandId;
   List<CategoryIds> categoryIds;
   String unit;
@@ -78,6 +79,7 @@ class Product {
         int userId,
         String slug,
         String name,
+        int productType,
         int brandId,
         List<CategoryIds> categoryIds,
         String unit,
@@ -111,6 +113,7 @@ class Product {
     this.userId = userId;
     this._slug = slug;
     this.name = name;
+    this.productType = productType;
     this.brandId = brandId;
     this.categoryIds = categoryIds;
     this.unit = unit;
@@ -143,6 +146,7 @@ class Product {
     addedBy = json['added_by'];
     userId = json['user_id'];
     name = json['name'];
+    productType = json['product_type'];
     brandId = json['brand_id'];
     _slug = json['slug'];
     if (json['category_ids'] != null) {
@@ -211,6 +215,7 @@ class Product {
     data['added_by'] = this.addedBy;
     data['user_id'] = this.userId;
     data['name'] = this.name;
+    data['product_type'] = this.productType;
     data['brand_id'] = this.brandId;
     if (this.categoryIds != null) {
       data['category_ids'] = this.categoryIds.map((v) => v.toJson()).toList();

@@ -213,7 +213,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (_) => DashboardScreen()));
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Successfully Added'),
+                  content: Text
+                    (getTranslated("Successfully Added", context)),
                   backgroundColor: Colors.green,
                 ));
               },

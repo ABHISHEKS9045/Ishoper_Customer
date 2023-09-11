@@ -87,6 +87,7 @@ class StockOutProductView extends StatelessWidget {
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
+                          print("pro.d ${productList}");
                           return ProductWidget(
                               productModel: productList[index]);
                         },

@@ -56,7 +56,8 @@ class LanguageDialog extends StatelessWidget {
         )),
 
         Divider(height: Dimensions.PADDING_SIZE_EXTRA_SMALL, color: ColorResources.HINT_TEXT_COLOR),
-        Row(children: [
+        Row(
+            children: [
           Expanded(child: TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(getTranslated('cancel', context), style: robotoRegular.copyWith(color: ColorResources.getYellow(context))),
@@ -80,7 +81,8 @@ class LanguageDialog extends StatelessWidget {
             },
             child: Text(getTranslated('ok', context), style: robotoRegular.copyWith(color: ColorResources.getGreen(context))),
           )),
-        ]),
+        ]
+        ),
 
       ]),
     );
